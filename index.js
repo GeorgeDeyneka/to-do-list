@@ -26,7 +26,7 @@ function addTask(event) {
     arrTodos.unshift(newTodo);
     listInput.value = "";
     onChangeTodos();
-    addTaskBtn.innerText = "Add New Task";
+    addTaskBtn.innerText = "Add Task";
   }
 }
 
