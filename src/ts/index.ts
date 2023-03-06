@@ -3,6 +3,7 @@ import { LocalStorage } from "./localStorage.class";
 
 // const toDo = new ToDoList();
 
+
 const storageClass = new LocalStorage("todo");
 
 const listInput = document.querySelector(".list__input") as HTMLInputElement;

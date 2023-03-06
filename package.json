@@ -22,5 +22,8 @@
     "sass": "^1.58.3",
     "ts-loader": "^9.4.2",
     "webpack-stream": "^7.0.0"
+  },
+  "devDependencies": {
+    "gulp-gh-pages": "^0.5.4"
   }
 }

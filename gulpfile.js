@@ -1,4 +1,5 @@
 const gulp = require("gulp");
+const ghPages = require("gulp-gh-pages");
 const webpack = require("webpack-stream");
 const sass = require("gulp-sass")(require("sass"));
 const autoprefixer = require("autoprefixer");
@@ -76,5 +77,9 @@ gulp.task(
   "build",
   gulp.parallel("copy-html", "copy-assets", "build-sass", "build-ts")
 );
+
+gulp.task("deploy", function () {
+  return gulp.src("./dist/**/*").pipe(ghPages());
+});
 
 gulp.task("default", gulp.parallel("watch", "build"));
