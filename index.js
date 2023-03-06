@@ -1,3 +1,10 @@
+import { LocalStorage } from "./js/localStorage.class.js";
+// import { ToDoList } from "./js/toDoList.class.js";
+
+// const toDo = new ToDoList();
+
+const storageClass = new LocalStorage("todo");
+
 const listInput = document.querySelector(".list__input");
 const listAreaForm = document.querySelector(".list__area-form");
 const addTaskBtn = document.querySelector(".list__btn-add");
@@ -7,10 +14,8 @@ let arrTodos = [];
 
 document.addEventListener("click", addTask);
 
-if (localStorage.getItem("todo")) {
-  arrTodos = JSON.parse(localStorage.getItem("todo"));
-  renderTask();
-}
+arrTodos = storageClass.getData();
+renderTask();
 
 function addTask(event) {
   if (event.target === addTaskBtn) {
@@ -44,12 +49,8 @@ function createRandomKey() {
 }
 
 function onChangeTodos() {
-  updateLocalStorage();
+  storageClass.setData(arrTodos);
   renderTask();
-}
-
-function updateLocalStorage() {
-  localStorage.setItem("todo", JSON.stringify(arrTodos));
 }
 
 function renderTask() {
@@ -74,14 +75,14 @@ function renderTask() {
     label.innerHTML = item.text;
 
     buttonEdit.innerHTML =
-    "<img src='./assets/images/edit.png' class='img__edit' width='20' height='20' alt=''>";
+      "<img src='./assets/images/edit.png' class='img__edit' width='20' height='20' alt=''>";
     buttonDel.innerHTML =
-    "<img src='./assets/images/delete.png' class='img__delete' width='20' height='20' alt=''>";
-    
+      "<img src='./assets/images/delete.png' class='img__delete' width='20' height='20' alt=''>";
+
     checkbox.type = "checkbox";
     checkbox.id = `item_${item.key}`;
     checkbox.checked = item.checked ? true : false;
-    
+
     if (checkbox.checked) {
       label.style.textDecoration = "line-through";
     }
