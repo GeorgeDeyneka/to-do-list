@@ -1,16 +1,16 @@
-import { LocalStorage } from "./js/localStorage.class.js";
+import { LocalStorage } from "./localStorage.class";
 // import { ToDoList } from "./js/toDoList.class.js";
 
 // const toDo = new ToDoList();
 
 const storageClass = new LocalStorage("todo");
 
-const listInput = document.querySelector(".list__input");
+const listInput = document.querySelector(".list__input") as HTMLInputElement;
 const listAreaForm = document.querySelector(".list__area-form");
-const addTaskBtn = document.querySelector(".list__btn-add");
-const todoTable = document.querySelector(".list__table");
+const addTaskBtn = document.querySelector(".list__btn-add") as HTMLButtonElement;
+const todoTable = document.querySelector(".list__table") as HTMLElement;
 
-let arrTodos = [];
+let arrTodos: Array<Object> = [];
 
 document.addEventListener("click", addTask);
 
@@ -22,7 +22,7 @@ function addTask(event) {
     event.preventDefault();
     if (!listInput.value) return;
 
-    const newTodo = {
+    const newTodo: Object = {
       text: listInput.value,
       checked: false,
       key: createRandomKey(),
@@ -56,7 +56,7 @@ function onChangeTodos() {
 function renderTask() {
   todoTable.innerHTML = "";
 
-  arrTodos.forEach((item) => {
+  arrTodos.forEach((item: any) => {
     const label = document.createElement("label");
     const li = document.createElement("li");
     const checkbox = document.createElement("input");
@@ -96,35 +96,36 @@ function renderTask() {
       updateChecked(item.key);
     });
 
-    buttonDiv.addEventListener("click", (event) => {
-      if (event.target.className === "list__btn-edit") {
+    buttonDiv.addEventListener("click", (event: any) => {
+      const target = event.target
+      if (target.className === "list__btn-edit") {
         editElement(item.key);
       }
-      if (event.target.className === "list__btn-delete") {
+      if (target.className === "list__btn-delete") {
         deleteTask(item.key);
       }
     });
   });
 }
 
-function updateChecked(key) {
-  const checkedElem = arrTodos.find((elem) => elem.key === key);
+function updateChecked(key: string) {
+  const checkedElem: any = arrTodos.find((elem: any) => elem.key === key);
 
   checkedElem.checked = !checkedElem.checked;
-  arrTodos.sort((a, b) => a.checked - b.checked);
+  arrTodos.sort((a: any, b: any) => a.checked - b.checked);
 
   onChangeTodos();
 }
 
 function editElement(key) {
-  const editedElem = arrTodos.find((elem) => elem.key == key);
+  const editedElem: any = arrTodos.find((elem: any) => elem.key == key);
 
   addTaskBtn.innerText = "Edit Task";
   listInput.value = editedElem.text;
 
   deleteTask(editedElem.key);
 
-  document.querySelectorAll(".list__btn-edit").forEach((elem) => {
+  document.querySelectorAll(".list__btn-edit").forEach((elem: any) => {
     elem.disabled = true;
   });
 }

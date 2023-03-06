@@ -1,10 +1,10 @@
-import { LocalStorage } from "./localStorage.class.js";
+import { LocalStorage } from "./localStorage.class";
 
 export class ToDoList {
   storageClass = new LocalStorage("todo");
   arrTodos = this.storageClass.getData();
-  listInput = document.querySelector(".list__input");
-  addTaskBtn = document.querySelector(".list__btn-add");
+  listInput = document.querySelector(".list__input") as HTMLInputElement;
+  addTaskBtn = document.querySelector(".list__btn-add") as HTMLButtonElement;
 
   constructor() {
     this.onInit();

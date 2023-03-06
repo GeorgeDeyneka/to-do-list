@@ -1,0 +1,188 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role=list],
+ol[role=list] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+body {
+  font-family: "Montserrat";
+}
+
+@media (min-width: 320px) {
+  .list__wrapper {
+    background-color: lightgray;
+    min-height: 100vh;
+    max-height: 100%;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .list__title {
+    padding: 10px 0px 15px;
+  }
+  .list__area-form {
+    display: flex;
+    justify-content: space-between;
+  }
+  .list__input {
+    min-width: 60%;
+    border-radius: 10px;
+    padding: 5px;
+    border: none;
+  }
+  .list__btn-add, .list__btn-delete, .list__btn-edit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    padding: 4px 15px;
+  }
+  .list__btn-add:hover, .list__btn-delete:hover, .list__btn-edit:hover {
+    cursor: pointer;
+  }
+  .list__btn-add {
+    padding: 4px 10px;
+    max-width: 150px;
+    background-color: #48ff94;
+  }
+  .list__btn-add:hover {
+    background-color: #7efcbd;
+  }
+  .list__btn-delete {
+    background-color: #fff;
+  }
+  .list__btn-delete:hover {
+    background-color: #f5f5f5;
+  }
+  .list__btn-edit {
+    background-color: #4848ff;
+  }
+  .list__btn-edit:hover {
+    background-color: #6471ff;
+  }
+  .list__btn-edit:disabled {
+    background-color: #c0c0c0;
+  }
+  .list__table {
+    padding: 0px;
+    margin: 20px 0px;
+  }
+  .list__task {
+    list-style: none;
+    margin: 5px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #c0c0c0;
+  }
+  .list__task-status {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    max-width: 350px;
+    overflow: hidden;
+  }
+  .list__buttons {
+    display: flex;
+    gap: 5px;
+  }
+  .img__delete, .img__edit {
+    pointer-events: none;
+  }
+}
+@media (min-width: 768px) {
+  body {
+    background-color: #b8b8b8;
+  }
+  .list__wrapper {
+    padding: 25px;
+    max-width: 850px;
+  }
+  .list__btn-add {
+    min-width: 120px;
+  }
+  .list__btn-edit, .list__btn-delete {
+    display: flex;
+    justify-content: center;
+    min-width: 60px;
+  }
+  .list__buttons {
+    gap: 10px;
+  }
+  .list__area-form {
+    justify-content: flex-start;
+    gap: 15px;
+  }
+  .list__input {
+    min-width: 400px;
+  }
+  .list__table {
+    max-width: 800px;
+  }
+}
+@media (min-width: 850px) {
+  .list__wrapper {
+    border-radius: 10px;
+  }
+}
