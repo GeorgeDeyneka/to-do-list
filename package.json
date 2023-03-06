@@ -6,7 +6,8 @@
   "scripts": {
     "build": "gulp",
     "watch": "gulp watch",
-    "start": "gulp default"
+    "start": "gulp default",
+    "deploy": "gulp deploy"
   },
   "keywords": [],
   "author": "",

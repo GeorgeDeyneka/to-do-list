@@ -12,7 +12,7 @@ export class LocalStorage {
     return [];
   }
 
-  setData(data: any) {
+  setData(data: any): void {
     localStorage.setItem(this.key, JSON.stringify(data));
   }
 }
