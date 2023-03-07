@@ -88,7 +88,7 @@ body {
     padding: 5px;
     border: none;
   }
-  .list__btn-add, .list__btn-delete, .list__btn-edit {
+  .list__btn-add, .list__btn-delete, .list__btn-edit, .list__btn-edit-task {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,7 +97,7 @@ body {
     color: white;
     padding: 4px 15px;
   }
-  .list__btn-add:hover, .list__btn-delete:hover, .list__btn-edit:hover {
+  .list__btn-add:hover, .list__btn-delete:hover, .list__btn-edit:hover, .list__btn-edit-task:hover {
     cursor: pointer;
   }
   .list__btn-add {
@@ -107,6 +107,12 @@ body {
   }
   .list__btn-add:hover {
     background-color: #7efcbd;
+  }
+  .list__btn-edit-task {
+    background-color: #4848ff;
+  }
+  .list__btn-edit-task:hover {
+    background-color: #6471ff;
   }
   .list__btn-delete {
     background-color: #fff;
