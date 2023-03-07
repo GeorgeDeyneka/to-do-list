@@ -1,20 +1,29 @@
 import { LocalStorage } from "./local-storage.class";
-import { ToDoObj } from "./models/to-do.interface";
+import { BtnsClass } from "./models/enums/buttons-classes.enum";
+import { HTMLTemplates } from "./models/enums/html-templates.enum";
+import { TmpltClass } from "./models/enums/template-classes.enum";
+import { ToDoObj } from "./models/interfaces/to-do.interface";
 
 export class ToDoList {
   private storageClass: LocalStorage = new LocalStorage("todo");
   private arrTodos: Array<ToDoObj> = this.storageClass.getData();
   private editedElem: ToDoObj;
+
   private listInput = document.querySelector(
-    ".list__input"
+    `.${TmpltClass.input}`
   ) as HTMLInputElement;
+
   private addTaskBtn = document.querySelector(
-    ".list__btn-add"
+    `.${BtnsClass.add}`
   ) as HTMLButtonElement;
+
   private editTaskBtn = document.querySelector(
-    ".list__btn-edit-task"
+    `.${BtnsClass.confirmEdit}`
   ) as HTMLButtonElement;
-  private todoTable = document.querySelector(".list__table") as HTMLElement;
+
+  private todoTable = document.querySelector(
+    `.${TmpltClass.table}`
+  ) as HTMLElement;
 
   constructor() {
     this.onInit();
@@ -34,9 +43,11 @@ export class ToDoList {
     data.map((item: ToDoObj, index: number) => {
       this.todoTable.appendChild(this.generateTemplate(item.id));
 
-      const inputWrapper = document.querySelectorAll(".list__task-status");
       const renderedCheckbox = this.generateCheckbox(item);
       const renderedLabel = this.generateLabel(item);
+      const inputWrapper = document.querySelectorAll(
+        `.${TmpltClass.statusDiv}`
+      );
 
       inputWrapper[index].append(renderedCheckbox, renderedLabel);
 
@@ -54,16 +65,14 @@ export class ToDoList {
     const buttonDiv = document.createElement("div");
     const taskStatus = document.createElement("div");
 
-    li.classList.add("list__task");
-    buttonDiv.classList.add("list__buttons");
-    buttonEdit.classList.add("list__btn-edit");
-    buttonDel.classList.add("list__btn-delete");
-    taskStatus.classList.add("list__task-status");
+    li.classList.add(TmpltClass.task);
+    buttonDiv.classList.add(BtnsClass.btnsDiv);
+    buttonEdit.classList.add(BtnsClass.edit);
+    buttonDel.classList.add(BtnsClass.delete);
+    taskStatus.classList.add(TmpltClass.statusDiv);
 
-    buttonEdit.innerHTML =
-      "<img src='./assets/images/edit.png' class='img__edit' width='20' height='20' alt=''>";
-    buttonDel.innerHTML =
-      "<img src='./assets/images/delete.png' class='img__delete' width='20' height='20' alt=''>";
+    buttonEdit.innerHTML = HTMLTemplates.innerEditBtn;
+    buttonDel.innerHTML = HTMLTemplates.innerDeleteBtn;
 
     buttonDiv.append(buttonDel, buttonEdit);
     li.append(taskStatus, buttonDiv);
@@ -88,7 +97,7 @@ export class ToDoList {
   generateLabel(item: ToDoObj) {
     const label = document.createElement("label");
     label.setAttribute("for", `item_${item.id}`);
-    label.className = "list__label";
+    label.className = TmpltClass.label;
     label.innerHTML = item.text;
 
     return label;
@@ -154,18 +163,18 @@ export class ToDoList {
   addEditButtonHandler(id: string, event: Event) {
     const target = event.target as HTMLButtonElement;
 
-    if (target.className === "list__btn-edit") {
+    if (target.className === BtnsClass.edit) {
       this.setStateEditButtons(true);
       this.editTask(id);
     }
-    if (target.className === "list__btn-delete") {
+    if (target.className === BtnsClass.delete) {
       this.deleteTask(id);
     }
   }
 
   setStateEditButtons(disabledStatus: boolean) {
     const editButtons: NodeListOf<HTMLButtonElement> =
-      document.querySelectorAll(".list__btn-edit");
+      document.querySelectorAll(`.${BtnsClass.edit}`);
 
     editButtons.forEach((button) => (button.disabled = disabledStatus));
   }
@@ -186,9 +195,7 @@ export class ToDoList {
   }
 
   addStyleOnChecked() {
-    const checkedElems = document.querySelectorAll(
-      'input[type="checkbox"]:checked'
-    );
+    const checkedElems = document.querySelectorAll(TmpltClass.checkedInput);
 
     checkedElems.forEach((checkbox) => {
       const key = checkbox.id.replace("item_", "");
