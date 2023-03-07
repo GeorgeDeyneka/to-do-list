@@ -115,6 +115,10 @@ body {
     }
   }
 
+  input[type="checkbox"] {
+    flex-shrink: 0;
+  }
+
   .img {
     &__delete,
     &__edit {
