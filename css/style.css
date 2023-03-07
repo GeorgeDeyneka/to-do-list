@@ -84,6 +84,7 @@ body {
   }
   .list__input {
     min-width: 60%;
+    max-width: 63%;
     border-radius: 10px;
     padding: 5px;
     border: none;
@@ -137,6 +138,7 @@ body {
     list-style: none;
     margin: 5px 0px;
     display: flex;
+    gap: 10px;
     justify-content: space-between;
     align-items: center;
     padding-bottom: 5px;
@@ -145,12 +147,16 @@ body {
   .list__task-status {
     display: flex;
     gap: 10px;
+    flex-grow: 1;
     align-items: center;
-    max-width: 350px;
-    overflow: hidden;
+  }
+  .list__label {
+    flex-grow: 1;
+    overflow-wrap: anywhere;
   }
   .list__buttons {
     display: flex;
+    flex-shrink: 0;
     gap: 5px;
   }
   .img__delete, .img__edit {
