@@ -26,35 +26,26 @@ export class ToDoList {
     this.addTaskBtn.addEventListener("click", this.addTask.bind(this));
     this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
     this.renderTask(this.arrTodos);
+    this.addStyleOnChecked();
   }
 
-  addTask(event: Event): void {
-    event.preventDefault();
+  renderTask(data: Array<ToDoObj>) {
+    this.todoTable.innerHTML = "";
 
-    if (!this.listInput.value) return;
+    data.map((item: ToDoObj, index: number) => {
+      this.todoTable.appendChild(this.generateTemplate(item.id));
 
-    const newTodo: ToDoObj = {
-      text: this.listInput.value,
-      checked: false,
-      id: this.createRandomKey(),
-    };
+      const inputWrapper = document.querySelectorAll(".list__task-status");
+      const renderedCheckbox = this.generateCheckbox(item);
+      const renderedLabel = this.generateLabel(item);
 
-    this.arrTodos.unshift(newTodo);
-    this.updateTodos();
-    this.listInput.value = "";
-  }
+      inputWrapper[index].append(renderedCheckbox, renderedLabel);
 
-  createRandomKey(): string {
-    let randomKey: string = "";
-    const STR_OF_SYMBOLS: string = "abcdefghijklmnopqrstuvwxyz";
-
-    for (let i = 0; i < 10; i++) {
-      randomKey += STR_OF_SYMBOLS.charAt(
-        Math.floor(Math.random() * STR_OF_SYMBOLS.length)
+      renderedCheckbox.addEventListener(
+        "change",
+        this.updateCheckedStatus.bind(this, item.id)
       );
-    }
-
-    return randomKey;
+    });
   }
 
   generateTemplate(itemId: string): HTMLLIElement {
@@ -86,23 +77,56 @@ export class ToDoList {
     return li;
   }
 
-  setStateEditButtons(disabledStatus: boolean) {
-    const editButtons: NodeListOf<HTMLButtonElement> =
-      document.querySelectorAll(".list__btn-edit");
+  generateCheckbox(item: ToDoObj) {
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `item_${item.id}`;
+    checkbox.checked = item.checked ? true : false;
 
-    editButtons.forEach((button) => (button.disabled = disabledStatus));
+    return checkbox;
   }
 
-  addEditButtonHandler(id: string, event: Event) {
-    const target = event.target as HTMLButtonElement;
+  generateLabel(item: ToDoObj) {
+    const label = document.createElement("label");
+    label.setAttribute("for", `item_${item.id}`);
+    label.className = "list__label";
+    label.innerHTML = item.text;
 
-    if (target.className === "list__btn-edit") {
-      this.setStateEditButtons(true);
-      this.editTask(id);
+    return label;
+  }
+
+  createRandomKey(): string {
+    let randomKey: string = "";
+    const STR_OF_SYMBOLS: string = "abcdefghijklmnopqrstuvwxyz";
+
+    for (let i = 0; i < 10; i++) {
+      randomKey += STR_OF_SYMBOLS.charAt(
+        Math.floor(Math.random() * STR_OF_SYMBOLS.length)
+      );
     }
-    if (target.className === "list__btn-delete") {
-      this.deleteTask(id);
-    }
+
+    return randomKey;
+  }
+
+  updateTodos() {
+    this.storageClass.setData(this.arrTodos);
+    this.renderTask(this.arrTodos);
+  }
+
+  addTask(event: Event): void {
+    event.preventDefault();
+
+    if (!this.listInput.value) return;
+
+    const newTodo: ToDoObj = {
+      text: this.listInput.value,
+      checked: false,
+      id: this.createRandomKey(),
+    };
+
+    this.arrTodos.unshift(newTodo);
+    this.updateTodos();
+    this.listInput.value = "";
   }
 
   deleteTask(id: string) {
@@ -138,31 +162,28 @@ export class ToDoList {
     }
   }
 
+  addEditButtonHandler(id: string, event: Event) {
+    const target = event.target as HTMLButtonElement;
+
+    if (target.className === "list__btn-edit") {
+      this.setStateEditButtons(true);
+      this.editTask(id);
+    }
+    if (target.className === "list__btn-delete") {
+      this.deleteTask(id);
+    }
+  }
+
+  setStateEditButtons(disabledStatus: boolean) {
+    const editButtons: NodeListOf<HTMLButtonElement> =
+      document.querySelectorAll(".list__btn-edit");
+
+    editButtons.forEach((button) => (button.disabled = disabledStatus));
+  }
+
   changeButtonsVisibility(from: HTMLButtonElement, to: HTMLButtonElement) {
     from.style.display = "none";
     to.style.display = "block";
-  }
-
-  generateCheckbox(item: ToDoObj) {
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.id = `item_${item.id}`;
-    checkbox.checked = item.checked ? true : false;
-
-    return checkbox;
-  }
-
-  generateLabel(item: ToDoObj) {
-    const label = document.createElement("label");
-    label.setAttribute("for", `item_${item.id}`);
-    label.innerHTML = item.text;
-
-    return label;
-  }
-
-  updateTodos() {
-    this.storageClass.setData(this.arrTodos);
-    this.renderTask(this.arrTodos);
   }
 
   updateCheckedStatus(key: string) {
@@ -172,25 +193,26 @@ export class ToDoList {
     checkedElem.checked = !checkedElem.checked;
     this.arrTodos.sort((a: any, b: any) => a.checked - b.checked);
     this.updateTodos();
+    this.addStyleOnChecked();
   }
 
-  renderTask(data: Array<ToDoObj>) {
-    this.todoTable.innerHTML = "";
+  addStyleOnChecked() {
+    const checkedElems = document.querySelectorAll(
+      'input[type="checkbox"]:checked'
+    );
 
-    data.map((item: ToDoObj, index: number) => {
-      this.todoTable.appendChild(this.generateTemplate(item.id));
-
-      const inputWrapper = document.querySelectorAll(".list__task-status");
-      const renderedCheckbox = this.generateCheckbox(item);
-      const renderedLabel = this.generateLabel(item);
-
-      inputWrapper[index].append(renderedCheckbox, renderedLabel);
-
-      renderedCheckbox.addEventListener(
-        "change",
-        this.updateCheckedStatus.bind(this, item.id)
+    checkedElems.forEach((checkbox) => {
+      const key = checkbox.id.replace("item_", "");
+      const label: HTMLLabelElement = document.querySelector(
+        `label[for="item_${key}"]`
       );
+      const checkedTodo: ToDoObj = this.arrTodos.find(
+        (todo: ToDoObj) => todo.id === key
+      );
+
+      return (label.style.textDecoration = checkedTodo.checked
+        ? "line-through"
+        : "none");
     });
   }
 }
-
