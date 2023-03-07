@@ -4,6 +4,7 @@ import { ToDoObj } from "./models/to-do.interface";
 export class ToDoList {
   private storageClass: LocalStorage = new LocalStorage("todo");
   private arrTodos: Array<ToDoObj> = this.storageClass.getData();
+  private editedElem: ToDoObj;
   private listInput = document.querySelector(
     ".list__input"
   ) as HTMLInputElement;
@@ -20,9 +21,7 @@ export class ToDoList {
   }
 
   onInit(): void {
-    this.editTaskBtn.addEventListener("click", (event) =>
-      event.preventDefault()
-    );
+    this.editTaskBtn.addEventListener("click", this.confirmEditTask.bind(this));
     this.addTaskBtn.addEventListener("click", this.addTask.bind(this));
     this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
     this.renderTask(this.arrTodos);
@@ -141,25 +140,15 @@ export class ToDoList {
     this.listInput.value = editedElem.text;
 
     this.changeButtonsVisibility(this.addTaskBtn, this.editTaskBtn);
+    this.editedElem = editedElem;
+  }
 
-    this.listInput.addEventListener("change", formGetValue.bind(this));
-
-    function formGetValue(event: Event) {
-      const target = event.target as HTMLInputElement;
-
-      if (editedElem) {
-        editedElem.text = target.value;
-
-        this.setStateEditButtons(false);
-        this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
-
-        this.listInput.removeEventListener("change", formGetValue);
-        this.updateTodos();
-
-        this.listInput.value = "";
-        editedElem = undefined;
-      }
-    }
+  confirmEditTask(event: Event) {
+    event.preventDefault();
+    this.editedElem.text = this.listInput.value;
+    this.updateTodos();
+    this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
+    this.listInput.value = "";
   }
 
   addEditButtonHandler(id: string, event: Event) {
