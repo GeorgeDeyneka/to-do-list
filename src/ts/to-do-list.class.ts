@@ -78,7 +78,10 @@ export class ToDoList {
     buttonDiv.append(buttonDel, buttonEdit);
     li.append(taskStatus, buttonDiv);
 
-    buttonDiv.addEventListener("click", this.buttonHandler.bind(this, itemId));
+    buttonDiv.addEventListener(
+      "click",
+      this.addEditButtonHandler.bind(this, itemId)
+    );
 
     return li;
   }
@@ -90,7 +93,7 @@ export class ToDoList {
     editButtons.forEach((button) => (button.disabled = disabledStatus));
   }
 
-  buttonHandler(id: string, event: Event) {
+  addEditButtonHandler(id: string, event: Event) {
     const target = event.target as HTMLButtonElement;
 
     if (target.className === "list__btn-edit") {
@@ -119,17 +122,19 @@ export class ToDoList {
 
     function formGetValue(event: Event) {
       const target = event.target as HTMLInputElement;
-      editedElem.text = target.value;
 
-      this.setStateEditButtons(false);
-      this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
+      if (editedElem) {
+        editedElem.text = target.value;
 
-      this.listInput.removeEventListener("change", formGetValue);
-      this.updateTodos();
+        this.setStateEditButtons(false);
+        this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
 
-      this.listInput.value = "";
-      editedElem = undefined;
-      // fix that bug
+        this.listInput.removeEventListener("change", formGetValue);
+        this.updateTodos();
+
+        this.listInput.value = "";
+        editedElem = undefined;
+      }
     }
   }
 
@@ -189,12 +194,3 @@ export class ToDoList {
   }
 }
 
-//     if (checkbox.checked) {
-//       label.style.textDecoration = "line-through";
-//     }
-
-// Think about action, which change text field. It will happened on click button or on change form event?
-// Work for button styles
-// Think about styles (title field is cutting)
-// Think about line throught
-// Think about button text

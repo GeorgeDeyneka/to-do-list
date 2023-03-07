@@ -32,7 +32,8 @@ body {
 
     &__btn-add,
     &__btn-delete,
-    &__btn-edit {
+    &__btn-edit,
+    &__btn-edit-task {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -51,6 +52,13 @@ body {
       background-color: #48ff94;
       &:hover {
         background-color: #7efcbd;
+      }
+    }
+
+    &__btn-edit-task {
+      background-color: #4848ff;
+      &:hover {
+        background-color: #6471ff;
       }
     }
 
