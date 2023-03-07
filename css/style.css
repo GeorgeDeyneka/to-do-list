@@ -159,6 +159,9 @@ body {
     flex-shrink: 0;
     gap: 5px;
   }
+  input[type=checkbox] {
+    flex-shrink: 0;
+  }
   .img__delete, .img__edit {
     pointer-events: none;
   }
