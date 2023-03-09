@@ -79,7 +79,7 @@ So, at the moment you have formed several tasks. Marking completed tasks, they w
 <div>
   <ul>
     <li>
-By clicking on the edit button next to the task you need, you will see the button change to "Edit Task", and the old task text will be automatically inserted into the input field. When you edit a task, other edit buttons are disabled.
+By clicking on the edit button next to the task you need, you will see the button change to "Edit Task", and the old task text will be automatically inserted into the input field. When you edit a task, the other edit and delete buttons are disabled and the edited issue is highlighted.
     </li>
     </br>
     <li>
