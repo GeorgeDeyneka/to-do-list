@@ -121,6 +121,9 @@ body {
   .list__btn-delete:hover {
     background-color: #f5f5f5;
   }
+  .list__btn-delete:disabled {
+    background-color: #c0c0c0;
+  }
   .list__btn-edit {
     background-color: #4848ff;
   }
@@ -151,6 +154,7 @@ body {
     align-items: center;
   }
   .list__label {
+    padding: 0 5px;
     flex-grow: 1;
     overflow-wrap: anywhere;
   }
@@ -158,6 +162,10 @@ body {
     display: flex;
     flex-shrink: 0;
     gap: 5px;
+  }
+  .editing {
+    background-color: #bababa;
+    border-radius: 8px;
   }
   input[type=checkbox] {
     flex-shrink: 0;
