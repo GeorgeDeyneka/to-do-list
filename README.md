@@ -102,7 +102,7 @@ If you need to delete a task, you can also do so by clicking the delete button n
     </li>
   </ul>
   </br>
-<img src="demo-images/middle-pass.png" alt="middle-password-demo" width="1000">
+<img src="demo-images/delete.png" alt="delete-task-demo" width="1000">
   </br>
   </br>
   <ul>
