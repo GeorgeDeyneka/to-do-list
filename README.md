@@ -39,7 +39,80 @@ When refactoring, I used the principles of KISS, DRY and the Single Responsibili
 - ![Gulp](https://img.shields.io/badge/GULP-%23CF4647.svg?style=for-the-badge&logo=gulp&logoColor=white)
 - ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
 
-<!-- USAGE -->
+## Usage
+
+### Main Page
+<div>
+  <ul>
+    <li>
+When you open the application, you see the main page.
+    </li>
+  </ul>
+  </br>
+<img src="demo-images/main-page.png" alt="main-page-demo" width="1000">
+</div>
+
+</br>
+
+---
+
+### Add tasks
+<div>
+  <ul>
+    <li>
+You can add tasks by entering text and clicking the "Add Task" button.
+    </li>
+    </br>
+    <li>
+So, at the moment you have formed several tasks. Marking completed tasks, they will be crossed out and sent to the bottom of the list.
+    </li>
+  </ul>
+  </br>
+<img src="demo-images/task-list.png" alt="task-list-demo" width="1000">
+</div>
+
+</br>
+
+---
+
+### Edit task
+<div>
+  <ul>
+    <li>
+By clicking on the edit button next to the task you need, you will see the button change to "Edit Task", and the old task text will be automatically inserted into the input field.
+    </li>
+    </br>
+    <li>
+After you finish editing, just confirm it by clicking on the button. The edited task will remain in the list in the same place where it was before.
+    </li>
+  </ul>
+  </br>
+<img src="demo-images/edit.png" alt="edit-task-demo" width="1000">
+</div>
+
+</br>
+
+---
+
+### Delete task
+<div>
+  <ul>
+    <li>
+If you need to delete a task, you can also do so by clicking the delete button next to the relevant task.
+    </li>
+  </ul>
+  </br>
+<img src="demo-images/middle-pass.png" alt="middle-password-demo" width="1000">
+  </br>
+  </br>
+  <ul>
+    <li>
+And even if you close the tab and return to the application later, your tasks will be saved because they are stored in local storage.
+    </li>
+  </ul>
+</div>
+
+</br>
 
 ## Contributing
 
