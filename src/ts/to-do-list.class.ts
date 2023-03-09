@@ -8,6 +8,7 @@ export class ToDoList {
   private storageClass: LocalStorage = new LocalStorage("todo");
   private arrTodos: Array<ToDoObj> = this.storageClass.getData();
   private editedElem: ToDoObj;
+  private appState: "add" | "edit";
 
   private listInput = document.querySelector(
     `.${TmpltClass.input}`
@@ -119,6 +120,11 @@ export class ToDoList {
   updateTodos() {
     this.storageClass.setData(this.arrTodos);
     this.renderTask(this.arrTodos);
+
+    this.setStateButtons(BtnsClass.edit);
+    this.setStateButtons(BtnsClass.delete);
+
+    this.addStyleOnChecked();
   }
 
   addTask(event: Event): void {
@@ -146,16 +152,36 @@ export class ToDoList {
 
   editTask(id: string) {
     let editedElem: ToDoObj = this.arrTodos.find((el) => el.id === id);
+    this.appState = "edit";
     this.listInput.value = editedElem.text;
+
+    this.setStateButtons(BtnsClass.edit);
+    this.setStateButtons(BtnsClass.delete);
 
     this.changeButtonsVisibility(this.addTaskBtn, this.editTaskBtn);
     this.editedElem = editedElem;
+    this.highlightEditingTask();
+  }
+
+  highlightEditingTask() {
+    if (!this.editedElem) return;
+
+    const editingLabel: HTMLLabelElement = document.querySelector(
+      `label[for="item_${this.editedElem.id}"]`
+    );
+
+    if (this.appState === "edit") {
+      return editingLabel.classList.add("editing");
+    }
+    return editingLabel.classList.remove("editing");
   }
 
   confirmEditTask(event: Event) {
+    this.appState = "add";
     event.preventDefault();
     this.editedElem.text = this.listInput.value;
     this.updateTodos();
+
     this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
     this.listInput.value = "";
   }
@@ -164,7 +190,6 @@ export class ToDoList {
     const target = event.target as HTMLButtonElement;
 
     if (target.className === BtnsClass.edit) {
-      this.setStateEditButtons(true);
       this.editTask(id);
     }
     if (target.className === BtnsClass.delete) {
@@ -172,11 +197,15 @@ export class ToDoList {
     }
   }
 
-  setStateEditButtons(disabledStatus: boolean) {
-    const editButtons: NodeListOf<HTMLButtonElement> =
-      document.querySelectorAll(`.${BtnsClass.edit}`);
+  setStateButtons(className: string) {
+    const buttons: NodeListOf<HTMLButtonElement> = document.querySelectorAll(
+      `.${className}`
+    );
 
-    editButtons.forEach((button) => (button.disabled = disabledStatus));
+    if (this.appState === "edit") {
+      return buttons.forEach((button) => (button.disabled = true));
+    }
+    return buttons.forEach((button) => (button.disabled = false));
   }
 
   changeButtonsVisibility(from: HTMLButtonElement, to: HTMLButtonElement) {
@@ -191,7 +220,6 @@ export class ToDoList {
     checkedElem.checked = !checkedElem.checked;
     this.arrTodos.sort((a: any, b: any) => a.checked - b.checked);
     this.updateTodos();
-    this.addStyleOnChecked();
   }
 
   addStyleOnChecked() {
@@ -205,6 +233,8 @@ export class ToDoList {
       const checkedTodo: ToDoObj = this.arrTodos.find(
         (todo: ToDoObj) => todo.id === key
       );
+
+      this.highlightEditingTask();
 
       return (label.style.textDecoration = checkedTodo.checked
         ? "line-through"
