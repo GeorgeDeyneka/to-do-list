@@ -187,6 +187,7 @@ export class ToDoList {
 
     this.changeButtonsVisibility(this.editTaskBtn, this.addTaskBtn);
     this.listInput.value = "";
+    this.editedElem = undefined;
   }
 
   addEditButtonHandler(id: string, event: Event) {
