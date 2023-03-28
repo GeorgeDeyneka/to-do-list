@@ -130,7 +130,7 @@ export class ToDoList {
   addTask(event: Event): void {
     event.preventDefault();
 
-    if (!this.listInput.value) return;
+    if (!this.listInput.value || this.appState === "edit") return;
 
     const newTodo: ToDoObj = {
       text: this.listInput.value,
@@ -177,8 +177,11 @@ export class ToDoList {
   }
 
   confirmEditTask(event: Event) {
-    this.appState = "add";
     event.preventDefault();
+
+    if (!this.listInput.value) return;
+
+    this.appState = "add";
     this.editedElem.text = this.listInput.value;
     this.updateTodos();
 
